@@ -50,9 +50,11 @@ public:
         view_->SetDigitKeyCallback([this](int key){
             PressDigitKey(key);
         });
+
         view_->SetProcessOperationKeyCallback([this](Operation key){
             ProcessOperationKey(key);
         });
+        
         view_->SetProcessControlKeyCallback([this](ControlKey key){
             ProcessControlKey(key);
         });

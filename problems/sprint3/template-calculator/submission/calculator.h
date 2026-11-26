@@ -25,29 +25,28 @@ public:
         number_ += rhs;
         return std::nullopt;
         }
-std::optional <Error> Number Sub(Number rhs) {
+    std::optional <Error> Number Sub(Number rhs) {
         number_ -= rhs;
         return std::nullopt;
         }
-std::optional <Error> Div (Number rhs) {
+    std::optional <Error> Div (Number rhs) {
+        number_  /= rhs;
+        if  constexpr (!std::is_floating_point_v<Number>){
+            if (rhs == Number {}) {
+                return Error {"Division by zero"};
+                }
+            }
+        return std::nullopt;
+        }
 
-if  constexpr (!std::is_floating_point_v<Number>){
-
-if (rhs == Number {}) {
-return Error {"Division by zero"};
-}}
-number_  /= rhs;
-return std::nullopt;
-}
-
-if constexpr (std::is_floating_point_v<Number>) {
-number_ = std::pow(number_, rhs);
-return std::nullopt;
-} else {
-    if (number_ == Number {} && rhs == Number {}) {
-    return Error {"Zero pwer by zero"};
+    if constexpr (std::is_floating_point_v<Number>) {
+        number_ = std::pow(number_, rhs);
+        return std::nullopt;
+    } else {
+        if (number_ == Number {} && rhs == Number {}) {
+        return Error {"Zero pwer by zero"};
+        }
     }
-}
 
 std::optional<Error> Pow(Number rhs) {
     if constexpr (std::is_floating_point_v<Number>) {
