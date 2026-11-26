@@ -15,39 +15,44 @@ template <class Number>
 class Calculator {
 public:
     void Set(Number number) {
-         number = number_;
+         number_ = number;
     }
 
     Number GetNumber() const {
-        return number;
+        return number_;
     }
-    std::optional <Error> Number Add(Number rhs) {
+    std::optional <Error> Add(Number rhs) {
         number_ += rhs;
         return std::nullopt;
         }
-    std::optional <Error> Number Sub(Number rhs) {
+    std::optional <Error> Sub(Number rhs) {
         number_ -= rhs;
         return std::nullopt;
         }
+    std::optional<Error> Mul(Number rhs) {
+        number_ *= rhs;
+        return std::nullopt;
+    }
     std::optional <Error> Div (Number rhs) {
-        number_  /= rhs;
+
         if  constexpr (!std::is_floating_point_v<Number>){
             if (rhs == Number {}) {
                 return Error {"Division by zero"};
                 }
             }
+        number_  /= rhs;
         return std::nullopt;
         }
-
+    /*
     if constexpr (std::is_floating_point_v<Number>) {
         number_ = std::pow(number_, rhs);
         return std::nullopt;
     } else {
         if (number_ == Number {} && rhs == Number {}) {
-        return Error {"Zero pwer by zero"};
+            return Error {"Zero pwer by zero"};
         }
     }
-
+*/
 std::optional<Error> Pow(Number rhs) {
     if constexpr (std::is_floating_point_v<Number>) {
         number_ = std::pow(number_, rhs);
@@ -71,7 +76,19 @@ std::optional<Error> Pow(Number rhs) {
 
     return std::nullopt;
 }
+bool GetHasMem() const {
+    return mem_.has_value();
+}
 
+void Save() {
+    mem_ = number_;
+}
+
+void Load() {
+    if (mem_.has_value()) {
+        number_ = *mem_;
+    }
+}
 private:
     Number number_{};
     std::optional<Number> mem_;
